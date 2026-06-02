@@ -1,206 +1,110 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Nurse Quest - ゆかりん編</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Nurse Quest β - ゆかりん編</title>
 <style>
-  :root{
-    --bg:#161225;
-    --panel:#241b3d;
-    --panel2:#30234f;
-    --accent:#7cff6b;
-    --accent2:#ffd43b;
-    --danger:#ff5d73;
-    --text:#fff7d6;
-    --muted:#c9bde6;
-    --line:#5e4a91;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    background:
-      radial-gradient(circle at top, #49316f 0, #161225 55%),
-      linear-gradient(180deg,#161225,#090713);
-    color:var(--text);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
-    padding:14px;
-  }
-  .app{max-width:520px;margin:0 auto;padding-bottom:24px}
-  .title{
-    text-align:center;
-    font-weight:900;
-    font-size:26px;
-    color:var(--accent2);
-    text-shadow:3px 3px 0 #000;
-    margin:8px 0 12px;
-    letter-spacing:.03em;
-  }
-  .card{
-    background:linear-gradient(180deg,var(--panel),#181126);
-    border:3px solid var(--line);
-    border-radius:18px;
-    box-shadow:0 8px 0 #080510, 0 0 0 2px #000 inset;
-    padding:14px;
-    margin:14px 0;
-  }
-  .heroBox{
-    display:grid;
-    grid-template-columns:118px 1fr;
-    gap:12px;
-    align-items:center;
-  }
-  .hero{
-    width:118px;height:118px;border-radius:22px;
-    background:#fff;
-    object-fit:cover;
-    border:4px solid #000;
-    box-shadow:0 5px 0 #090510;
-  }
-  .name{font-weight:900;font-size:19px}
-  .job{color:var(--muted);font-size:13px;margin:3px 0 8px}
-  .lv{font-size:22px;font-weight:900;color:var(--accent)}
-  .bar{
-    height:18px;background:#0b0712;border:2px solid #000;border-radius:12px;overflow:hidden;margin:7px 0;
-  }
-  .fill{height:100%;background:linear-gradient(90deg,var(--accent),#d5ff65);width:0%}
-  .small{font-size:12px;color:var(--muted)}
-  h2{font-size:18px;margin:0 0 10px;color:var(--accent2)}
-  .stats{display:grid;gap:8px}
-  .statRow{display:grid;grid-template-columns:86px 1fr 42px;gap:8px;align-items:center;font-size:13px}
-  .statBar{height:12px;background:#0b0712;border:2px solid #000;border-radius:9px;overflow:hidden}
-  .statFill{height:100%;background:var(--accent);width:0%}
-  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}
-  .tab,.btn{
-    border:3px solid #000;
-    border-radius:14px;
-    background:linear-gradient(180deg,#fff1a8,#f7b733);
-    color:#20120b;
-    font-weight:900;
-    padding:10px 8px;
-    box-shadow:0 5px 0 #080510;
-    cursor:pointer;
-    touch-action:manipulation;
-  }
-  .tab.active{background:linear-gradient(180deg,#9dff8f,#34c759)}
-  .btn:active,.tab:active{transform:translateY(3px);box-shadow:0 2px 0 #080510}
-  .lesson{
-    background:var(--panel2);
-    border:2px solid var(--line);
-    border-radius:14px;
-    padding:10px;
-    margin:8px 0;
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:8px;
-    align-items:center;
-  }
-  .lesson.done{opacity:.55}
-  .lessonTitle{font-weight:900}
-  .lessonMeta{font-size:12px;color:var(--muted);margin-top:3px}
-  .bossHp{font-size:13px;margin-top:6px}
-  .badge{
-    display:inline-block;
-    margin:4px 4px 0 0;
-    padding:6px 9px;
-    border-radius:999px;
-    background:#100b1d;
-    border:2px solid var(--line);
-    font-size:12px;
-  }
-  .log{
-    background:#0b0712;
-    border:2px solid #000;
-    border-radius:12px;
-    padding:10px;
-    min-height:74px;
-    white-space:pre-wrap;
-    font-size:13px;
-    color:#d8ffd5;
-  }
-  textarea{
-    width:100%;
-    min-height:84px;
-    border-radius:14px;
-    padding:10px;
-    border:3px solid #000;
-    background:#fff8d8;
-    color:#20120b;
-    font-size:15px;
-  }
-  .danger{background:linear-gradient(180deg,#ff9aa8,#ff5d73);color:#fff}
-  .hidden{display:none}
+:root{--bg:#151024;--p:#24183f;--p2:#322456;--line:#6b55a6;--txt:#fff8d7;--mut:#cbbfe8;--y:#ffd84d;--g:#7cff6b;--r:#ff5d73;--b:#76d7ff}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#4a3172,#151024 54%,#080610);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;padding:14px}
+.app{max-width:540px;margin:auto;padding-bottom:40px}.title{text-align:center;font-weight:900;font-size:26px;color:var(--y);text-shadow:3px 3px #000;margin:8px 0 12px}
+.card{background:linear-gradient(180deg,var(--p),#171026);border:3px solid var(--line);border-radius:18px;box-shadow:0 8px 0 #080510,0 0 0 2px #000 inset;padding:14px;margin:14px 0}
+.heroBox{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:center}.hero{width:118px;height:118px;border-radius:22px;object-fit:cover;border:4px solid #000;background:#fff;box-shadow:0 5px #080510}
+.name{font-size:19px;font-weight:900}.job{font-size:13px;color:var(--mut);margin:3px 0 8px}.lv{font-size:22px;font-weight:900;color:var(--g)}
+.bar{height:18px;background:#0b0712;border:2px solid #000;border-radius:12px;overflow:hidden;margin:7px 0}.fill{height:100%;background:linear-gradient(90deg,var(--g),#d5ff65);width:0%}
+.small{font-size:12px;color:var(--mut)} h2{font-size:18px;margin:0 0 10px;color:var(--y)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}.tabs2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:8px 0}
+.tab,.btn,select,input,textarea{font:inherit}.tab,.btn{border:3px solid #000;border-radius:14px;background:linear-gradient(180deg,#fff1a8,#f7b733);color:#20120b;font-weight:900;padding:10px 8px;box-shadow:0 5px #080510;cursor:pointer;touch-action:manipulation}
+.tab.active{background:linear-gradient(180deg,#9dff8f,#34c759)}.btn.blue{background:linear-gradient(180deg,#a9ecff,#43b8e8)}.btn.red{background:linear-gradient(180deg,#ff9aa8,#ff5d73);color:#fff}.btn.purple{background:linear-gradient(180deg,#d9b8ff,#9b5cff);color:#20120b}.btn:active,.tab:active{transform:translateY(3px);box-shadow:0 2px #080510}
+.lesson{background:var(--p2);border:2px solid var(--line);border-radius:14px;padding:10px;margin:8px 0;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.lesson.done{opacity:.55}.lessonTitle{font-weight:900}.lessonMeta{font-size:12px;color:var(--mut);margin-top:3px}
+.stats{display:grid;gap:8px}.statRow{display:grid;grid-template-columns:92px 1fr 44px;gap:8px;align-items:center;font-size:13px}.statBar{height:12px;background:#0b0712;border:2px solid #000;border-radius:9px;overflow:hidden}.statFill{height:100%;background:var(--g)}
+.badge{display:inline-block;margin:4px 4px 0 0;padding:6px 9px;border-radius:999px;background:#100b1d;border:2px solid var(--line);font-size:12px}.log{background:#0b0712;border:2px solid #000;border-radius:12px;padding:10px;white-space:pre-wrap;font-size:13px;color:#d8ffd5;min-height:90px}
+textarea,input,select{width:100%;border-radius:14px;padding:10px;border:3px solid #000;background:#fff8d8;color:#20120b;margin:5px 0}textarea{min-height:90px}.hidden{display:none}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.notice{border:2px dashed var(--y);padding:10px;border-radius:14px;background:#191126}.gacha{font-size:20px;text-align:center;line-height:1.7}.flash{animation:flash .6s ease 2}@keyframes flash{50%{filter:brightness(1.8)}}
+canvas{width:100%;height:180px;background:#100b1d;border:2px solid #000;border-radius:14px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="title">🎮 Nurse Quest<br>ゆかりん編</div>
+  <div class="title">🎮 Nurse Quest β<br>ゆかりん編</div>
 
   <section class="card heroBox">
     <img class="hero" src="yukarin_hero.jpeg" alt="主人公ゆかりん">
     <div>
-      <div class="name">ゆかりん</div>
-      <div class="job" id="job">看護学生見習い</div>
-      <div class="lv">Lv.<span id="level">1</span></div>
+      <div class="name">ゆかりん</div><div class="job" id="job"></div>
+      <div class="lv">Lv.<span id="level"></span></div>
       <div class="bar"><div class="fill" id="expFill"></div></div>
-      <div class="small">EXP <span id="exp">0</span> / <span id="nextExp">100</span></div>
+      <div class="small">EXP <span id="exp"></span> / <span id="nextExp"></span>　💎<span id="gems"></span></div>
+      <div class="small">🔥連続ログイン <span id="streak"></span>日</div>
     </div>
   </section>
 
   <div class="tabs">
-    <button class="tab active" onclick="showTab('home', this)">ホーム</button>
-    <button class="tab" onclick="showTab('boss', this)">ボス</button>
-    <button class="tab" onclick="showTab('badge', this)">称号</button>
-    <button class="tab" onclick="showTab('memo', this)">メモ</button>
+    <button class="tab active" onclick="showTab('home',this)">ホーム</button>
+    <button class="tab" onclick="showTab('boss',this)">ボス</button>
+    <button class="tab" onclick="showTab('memo',this)">メモ</button>
+    <button class="tab" onclick="showTab('more',this)">設定</button>
   </div>
 
   <section id="home" class="screen">
     <section class="card">
       <h2>📅 今日のクエスト</h2>
-      <div class="small">日付を選んで授業ボタンを押すと、EXPとステータスが上がるよ</div>
-      <select id="dateSelect" class="btn" style="width:100%;margin:10px 0;" onchange="renderLessons()"></select>
+      <div class="notice" id="dailyNotice"></div>
+      <select id="dateSelect" onchange="renderLessons()"></select>
       <div id="lessons"></div>
-      <button class="btn" style="width:100%;margin-top:8px" onclick="quickStudy()">🔥 10分復習した！</button>
+      <div class="grid2">
+        <button class="btn" onclick="quickStudy()">🔥10分復習</button>
+        <button class="btn blue" onclick="doFreeQuest('課題を進めた',45,{nursing:3,human:2},'課題ドラゴン')">📝課題</button>
+      </div>
     </section>
-
-    <section class="card">
-      <h2>📊 ステータス</h2>
-      <div class="stats" id="stats"></div>
-    </section>
+    <section class="card"><h2>📊 ステータス</h2><div id="stats" class="stats"></div></section>
+    <section class="card"><h2>📈 成長グラフ</h2><canvas id="chart" width="500" height="180"></canvas></section>
   </section>
 
   <section id="boss" class="screen hidden">
-    <section class="card">
-      <h2>👾 ボス戦</h2>
-      <div id="bosses"></div>
-    </section>
-  </section>
-
-  <section id="badge" class="screen hidden">
-    <section class="card">
-      <h2>🏅 称号</h2>
-      <div id="badges"></div>
-    </section>
+    <section class="card"><h2>👾 ボス戦</h2><div id="bosses"></div></section>
+    <section class="card"><h2>🎰 ガチャ</h2><div class="gacha" id="gachaResult">💎10で1回</div><button class="btn purple" style="width:100%" onclick="rollGacha()">ガチャを回す</button></section>
+    <section class="card"><h2>🏅 称号・実績</h2><div id="badges"></div></section>
   </section>
 
   <section id="memo" class="screen hidden">
     <section class="card">
       <h2>📝 今日わかったこと</h2>
-      <textarea id="memoText" placeholder="例：IgAは粘膜！"></textarea>
-      <button class="btn" style="width:100%;margin-top:8px" onclick="saveMemo()">保存</button>
+      <textarea id="memoInput" placeholder="例：IgAは粘膜！"></textarea>
+      <button class="btn" style="width:100%" onclick="saveMemo()">メモ保存 +10EXP</button>
+    </section>
+    <section class="card"><h2>📚 メモ履歴</h2><div id="memoList"></div></section>
+  </section>
+
+  <section id="more" class="screen hidden">
+    <section class="card">
+      <h2>➕ 授業追加</h2>
+      <div class="small">PDF側と統合するまでの臨時追加用。スマホ内に保存されるよ。</div>
+      <input id="addDate" placeholder="2026/7/1">
+      <input id="addPeriod" placeholder="1限">
+      <input id="addSubject" placeholder="微生物">
+      <button class="btn" style="width:100%" onclick="addLesson()">授業を追加</button>
     </section>
     <section class="card">
-      <h2>📜 ログ</h2>
-      <div class="log" id="log"></div>
-      <button class="btn danger" style="width:100%;margin-top:8px" onclick="resetGame()">セーブ初期化</button>
+      <h2>📥 時間割データ取り込み</h2>
+      <div class="small">時間割シートから作ったJSONを貼ると授業を更新できる。形式：[[日付,時限,科目], ...]</div>
+      <textarea id="jsonImport" placeholder='[["2026/7/1","1限","微生物"]]'></textarea>
+      <button class="btn blue" style="width:100%" onclick="importSchedule()">取り込む</button>
     </section>
+    <section class="card">
+      <h2>💾 セーブ保険</h2>
+      <button class="btn" style="width:100%;margin-bottom:8px" onclick="exportSave()">セーブを書き出す</button>
+      <textarea id="saveBox" placeholder="ここにバックアップが出る／読み込みデータを貼る"></textarea>
+      <button class="btn blue" style="width:100%;margin-bottom:8px" onclick="importSave()">セーブを読み込む</button>
+      <button class="btn red" style="width:100%" onclick="resetGame()">セーブ初期化</button>
+    </section>
+    <section class="card"><h2>📜 ログ</h2><div class="log" id="log"></div></section>
   </section>
 </div>
 
 <script>
-const lessons = [
+const DEFAULT_LESSONS = [
 ["2026/6/2","1限","病理"],["2026/6/2","2限","微生物"],["2026/6/2","3限","形態Ⅱ"],["2026/6/2","4限","生化学"],
-["2026/6/3","1限","形態Ⅳ"],["2026/6/3","2限","物理学"],["2026/6/3","3限","生活援助論Ⅲ"],
+["2026/6/3","1限","形態Ⅳ"],["2026/6/3","2限","物理学"],["2026/6/3","3限","生活援助論Ⅲ"],["2026/6/3","4限","物資購入"],
 ["2026/6/4","1限","形態Ⅰ"],["2026/6/4","2限","看護学概論"],["2026/6/4","3限","自己学習"],["2026/6/4","4限","自己学習"],
 ["2026/6/5","1限","自己学習"],["2026/6/5","2限","形態Ⅳ"],["2026/6/5","3限","医安"],["2026/6/5","4限","医安"],
 ["2026/6/8","1限","パフォーマンス論"],["2026/6/8","2限","看護学概論"],["2026/6/8","3限","生活Ⅲ"],["2026/6/8","4限","心理学"],
@@ -221,186 +125,49 @@ const lessons = [
 ["2026/6/29","1限","疾病Ⅱ"],["2026/6/29","2限","物資購入"],["2026/6/29","3限","生化学"],["2026/6/29","4限","心理学"],
 ["2026/6/30","1限","コミュニケーション"],["2026/6/30","2限","人間関係"],["2026/6/30","3限","微生物"],["2026/6/30","4限","疾病Ⅱ"]
 ];
-
-const statNames = {
-  base:"📚基礎知識", clinical:"🧠臨床推論", skill:"🩺実践技術", nursing:"📝看護力", human:"🔥人間力"
-};
-
-const map = {
-  "形態":{base:8, clinical:1, boss:"人体マニア"},
-  "微生物":{base:8, clinical:3, boss:"微生物ドラゴン"},
-  "病理":{base:7, clinical:4, boss:"病理キマイラ"},
-  "生化学":{base:7, clinical:1, boss:"知識ゴーレム"},
-  "疾病":{base:6, clinical:6, boss:"臨床推論デーモン"},
-  "物理":{base:5, clinical:2, boss:"計算スライム"},
-  "生活援助":{skill:8, nursing:4, boss:"援助ゴーレム"},
-  "生活Ⅲ":{skill:5, nursing:4, boss:"援助ゴーレム"},
-  "生活Ⅱ":{skill:4, nursing:4, boss:"援助ゴーレム"},
-  "医安":{skill:6, nursing:5, clinical:2, boss:"医療安全ナイト"},
-  "看護学概論":{nursing:8, human:2, boss:"ナイチンゲールの影"},
-  "人間関係":{human:8, nursing:3, boss:"人間関係フェアリー"},
-  "コミュ":{human:8, nursing:2, boss:"人間関係フェアリー"},
-  "心理":{human:6, clinical:3, boss:"こころの森"},
-  "パフォーマンス":{human:7, boss:"発表スライム"},
-  "地在":{nursing:5, clinical:4, human:2, boss:"地域理解ビースト"},
-  "臨地":{skill:5, nursing:6, human:4, boss:"実習指導者"},
-  "自己学習":{base:2, clinical:2, human:2, boss:"睡魔スライム"},
-  "国試":{base:5, clinical:5, nursing:3, boss:"国試ラスボス"}
-};
-
-const bossDefs = {
-  "微生物ドラゴン": 800, "病理キマイラ": 900, "援助ゴーレム": 900, "実習指導者": 1200,
-  "人体マニア": 1000, "知識ゴーレム": 700, "臨床推論デーモン": 1000, "計算スライム": 400,
-  "医療安全ナイト": 800, "ナイチンゲールの影": 700, "人間関係フェアリー": 700,
-  "こころの森": 500, "発表スライム": 400, "地域理解ビースト": 600, "睡魔スライム": 500,
-  "国試ラスボス": 3000
-};
-
-let state = JSON.parse(localStorage.getItem("nurseQuestYukarin") || "null") || {
-  exp:0, level:1, stats:{base:0,clinical:0,skill:0,nursing:0,human:0},
-  done:{}, badges:[], log:["冒険開始！ゆかりん看護学生RPG、起動！"], memo:"",
-  bosses:Object.fromEntries(Object.entries(bossDefs).map(([k,v])=>[k,{max:v,hp:v}]))
-};
-
-function save(){ localStorage.setItem("nurseQuestYukarin", JSON.stringify(state)); }
-function nextExp(){ return state.level * 100; }
-function calcJob(){
-  if(state.level>=50) return "臨床アタッカー";
-  if(state.level>=35) return "病棟ルーキー";
-  if(state.level>=20) return "実習候補生";
-  if(state.level>=10) return "基礎看護兵";
-  return "看護学生見習い";
-}
-function levelUp(){
-  let up=false;
-  while(state.exp >= nextExp()){
-    state.exp -= nextExp();
-    state.level++;
-    up=true;
-    state.log.unshift(`🎉 LEVEL UP！ Lv.${state.level-1} → Lv.${state.level}`);
-  }
-  if(up) unlockBadges();
-}
-function getRule(name){
-  for(const key in map){ if(name.includes(key)) return map[key]; }
-  return {base:2,human:1,boss:"睡魔スライム"};
-}
-function lessonId(date, period, name){ return `${date}_${period}_${name}`; }
-function completeLesson(date, period, name){
-  const id=lessonId(date,period,name);
-  if(state.done[id]) return;
-  state.done[id]=true;
-  const rule=getRule(name);
-  let gained=40;
-  let msg=`✅ ${period} ${name} 完了！\n+${gained}EXP`;
-  state.exp += gained;
-  for(const k of Object.keys(statNames)){
-    const v=rule[k]||0;
-    if(v){ state.stats[k]+=v; msg+=`\n${statNames[k]} +${v}`; }
-  }
-  if(rule.boss && state.bosses[rule.boss]){
-    const dmg=50;
-    state.bosses[rule.boss].hp=Math.max(0,state.bosses[rule.boss].hp-dmg);
-    msg+=`\n👾 ${rule.boss}に${dmg}ダメージ！`;
-    if(state.bosses[rule.boss].hp===0) addBadge(`討伐：${rule.boss}`);
-  }
-  state.log.unshift(msg);
-  levelUp(); unlockBadges(); save(); render();
-}
-function quickStudy(){
-  state.exp+=30;
-  state.stats.base+=2; state.stats.clinical+=2; state.stats.human+=1;
-  state.bosses["睡魔スライム"].hp=Math.max(0,state.bosses["睡魔スライム"].hp-40);
-  state.log.unshift("🔥 10分復習！\n+30EXP\n📚基礎知識 +2\n🧠臨床推論 +2\n🔥人間力 +1");
-  levelUp(); unlockBadges(); save(); render();
-}
-function addBadge(name){
-  if(!state.badges.includes(name)){
-    state.badges.push(name);
-    state.log.unshift(`🏅称号獲得：${name}`);
-  }
-}
-function unlockBadges(){
-  if(state.level>=5) addBadge("毎日ログイン候補生");
-  if(state.level>=10) addBadge("基礎看護兵");
-  if(state.stats.base>=100) addBadge("人体マニア");
-  if(state.stats.clinical>=80) addBadge("考える看護学生");
-  if(state.stats.skill>=80) addBadge("援助マスター");
-  if(state.stats.nursing>=80) addBadge("ナイチンゲールの弟子");
-  if(state.stats.human>=80) addBadge("共感の使徒");
-}
-function render(){
-  document.getElementById("level").textContent=state.level;
-  document.getElementById("exp").textContent=state.exp;
-  document.getElementById("nextExp").textContent=nextExp();
-  document.getElementById("job").textContent=calcJob();
-  document.getElementById("expFill").style.width=Math.min(100, state.exp/nextExp()*100)+"%";
-  renderStats(); renderLessons(); renderBosses(); renderBadges();
-  document.getElementById("log").textContent=state.log.slice(0,8).join("\n\n");
-  document.getElementById("memoText").value=state.memo || "";
-}
-function renderStats(){
-  const el=document.getElementById("stats"); el.innerHTML="";
-  for(const k of Object.keys(statNames)){
-    const v=state.stats[k];
-    el.innerHTML += `<div class="statRow"><div>${statNames[k]}</div><div class="statBar"><div class="statFill" style="width:${Math.min(100,v)}%"></div></div><div>${v}</div></div>`;
-  }
-}
-function initDates(){
-  const dates=[...new Set(lessons.map(x=>x[0]))];
-  const sel=document.getElementById("dateSelect");
-  sel.innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join("");
-  const today=new Date();
-  const t=`${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`;
-  if(dates.includes(t)) sel.value=t;
-}
-function renderLessons(){
-  const date=document.getElementById("dateSelect").value;
-  const list=lessons.filter(x=>x[0]===date);
-  const el=document.getElementById("lessons"); if(!el) return;
-  el.innerHTML = list.map(([d,p,n])=>{
-    const id=lessonId(d,p,n), done=!!state.done[id], rule=getRule(n);
-    const adds=Object.keys(statNames).filter(k=>rule[k]).map(k=>`${statNames[k]}+${rule[k]}`).join(" ");
-    return `<div class="lesson ${done?'done':''}">
-      <div><div class="lessonTitle">${p} ${n}</div><div class="lessonMeta">${adds || "EXP獲得"} / ボス：${rule.boss}</div></div>
-      <button class="btn" onclick="completeLesson('${d}','${p}','${n}')" ${done?'disabled':''}>${done?'済':'完了'}</button>
-    </div>`;
-  }).join("") || `<div class="small">この日の授業データはまだないよ</div>`;
-}
-function renderBosses(){
-  const el=document.getElementById("bosses"); el.innerHTML="";
-  for(const [name,b] of Object.entries(state.bosses)){
-    const pct=(b.max-b.hp)/b.max*100;
-    el.innerHTML += `<div class="lesson"><div style="width:100%">
-      <div class="lessonTitle">👾 ${name}</div>
-      <div class="bar"><div class="fill" style="width:${100-b.hp/b.max*100}%"></div></div>
-      <div class="bossHp">HP ${b.hp} / ${b.max}</div>
-    </div></div>`;
-  }
-}
-function renderBadges(){
-  const el=document.getElementById("badges");
-  el.innerHTML = state.badges.length ? state.badges.map(b=>`<span class="badge">🏅${b}</span>`).join("") : `<div class="small">まだ称号なし。今日の授業を倒しに行こう！</div>`;
-}
-function saveMemo(){
-  state.memo=document.getElementById("memoText").value;
-  state.exp+=10;
-  state.log.unshift("📝 メモ保存！ +10EXP");
-  levelUp(); save(); render();
-}
-function resetGame(){
-  if(confirm("本当に初期化する？")){
-    localStorage.removeItem("nurseQuestYukarin");
-    location.reload();
-  }
-}
-function showTab(id, btn){
-  document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-}
-initDates(); render();
+const statNames={base:"📚基礎知識",clinical:"🧠臨床推論",skill:"🩺実践技術",nursing:"📝看護力",human:"🔥人間力"};
+const map={"形態":{base:8,clinical:1,boss:"人体マニア"},"微生物":{base:8,clinical:3,boss:"微生物ドラゴン"},"病理":{base:7,clinical:4,boss:"病理キマイラ"},"生化学":{base:7,clinical:1,boss:"知識ゴーレム"},"疾病":{base:6,clinical:6,boss:"臨床推論デーモン"},"物理":{base:5,clinical:2,boss:"計算スライム"},"生活援助":{skill:8,nursing:4,boss:"援助ゴーレム"},"生活Ⅲ":{skill:5,nursing:4,boss:"援助ゴーレム"},"生活Ⅱ":{skill:4,nursing:4,boss:"援助ゴーレム"},"医安":{skill:6,nursing:5,clinical:2,boss:"医療安全ナイト"},"看護学概論":{nursing:8,human:2,boss:"ナイチンゲールの影"},"人間関係":{human:8,nursing:3,boss:"人間関係フェアリー"},"コミュ":{human:8,nursing:2,boss:"人間関係フェアリー"},"心理":{human:6,clinical:3,boss:"こころの森"},"パフォーマンス":{human:7,boss:"発表スライム"},"地在":{nursing:5,clinical:4,human:2,boss:"地域理解ビースト"},"臨地":{skill:5,nursing:6,human:4,boss:"実習指導者"},"自己学習":{base:2,clinical:2,human:2,boss:"睡魔スライム"},"国試":{base:5,clinical:5,nursing:3,boss:"国試ラスボス"}};
+const bossDefs={"微生物ドラゴン":800,"病理キマイラ":900,"援助ゴーレム":900,"実習指導者":1200,"人体マニア":1000,"知識ゴーレム":700,"臨床推論デーモン":1000,"計算スライム":400,"医療安全ナイト":800,"ナイチンゲールの影":700,"人間関係フェアリー":700,"こころの森":500,"発表スライム":400,"地域理解ビースト":600,"睡魔スライム":500,"課題ドラゴン":700,"国試ラスボス":3000};
+const KEY="nurseQuestYukarin";
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||{version:2,exp:0,level:1,gems:0,streak:0,lastLogin:"",stats:{base:0,clinical:0,skill:0,nursing:0,human:0},done:{},badges:[],log:["冒険開始！"],memos:[],history:[],extraLessons:[],bosses:Object.fromEntries(Object.entries(bossDefs).map(([k,v])=>[k,{max:v,hp:v}]))};
+for(const b in bossDefs){if(!state.bosses[b])state.bosses[b]={max:bossDefs[b],hp:bossDefs[b]}}
+if(!state.memos)state.memos=[]; if(!state.history)state.history=[]; if(!state.extraLessons)state.extraLessons=[]; if(!state.gems)state.gems=0;
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function todayStr(){let d=new Date();return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`}
+function dateObj(s){let [y,m,d]=s.split("/").map(Number);return new Date(y,m-1,d)}
+function nextExp(){return state.level*100}
+function job(){if(state.level>=100)return"学年上位勢";if(state.level>=70)return"救急の卵";if(state.level>=50)return"臨床アタッカー";if(state.level>=35)return"病棟ルーキー";if(state.level>=20)return"実習候補生";if(state.level>=10)return"基礎看護兵";return"看護学生見習い"}
+function addLog(x){state.log.unshift(x);state.log=state.log.slice(0,30)}
+function addBadge(x){if(!state.badges.includes(x)){state.badges.push(x);addLog(`🏅称号獲得：${x}`)}}
+function loginBonus(){let t=todayStr();if(state.lastLogin===t)return;let last=state.lastLogin?dateObj(state.lastLogin):null;let now=dateObj(t);let diff=last?Math.round((now-last)/(86400000)):999;if(diff===1)state.streak++;else state.streak=1;state.lastLogin=t;let bonus=40+Math.min(state.streak,30)*10;state.exp+=bonus;state.gems+=1;addLog(`🎁ログインボーナス！\n連続${state.streak}日\n+${bonus}EXP / 💎+1`);levelUp();save()}
+function levelUp(){while(state.exp>=nextExp()){state.exp-=nextExp();state.level++;addLog(`🎉LEVEL UP！ Lv.${state.level-1}→${state.level}`);state.gems+=3}unlockBadges()}
+function unlockBadges(){if(state.level>=10)addBadge("基礎看護兵");if(state.level>=20)addBadge("実習候補生");if(state.streak>=3)addBadge("3日連続ログイン");if(state.streak>=7)addBadge("7日連続ログイン");if(state.stats.base>=100)addBadge("人体マニア");if(state.stats.clinical>=80)addBadge("考える看護学生");if(state.stats.skill>=80)addBadge("援助マスター");if(state.stats.nursing>=80)addBadge("ナイチンゲールの弟子");if(state.stats.human>=80)addBadge("共感の使徒");}
+function allLessons(){return [...DEFAULT_LESSONS,...state.extraLessons]}
+function rule(name){for(const k in map){if(name.includes(k))return map[k]}return{base:2,human:1,boss:"睡魔スライム"}}
+function lid(d,p,n){return`${d}_${p}_${n}`}
+function completeLesson(d,p,n){let id=lid(d,p,n);if(state.done[id])return;state.done[id]=true;applyReward(`${p} ${n}`,40,rule(n),50);save();render()}
+function applyReward(label,exp,adds,dmg){state.exp+=exp;let msg=`✅${label} 完了！\n+${exp}EXP`;for(const k in statNames){let v=adds[k]||0;if(v){state.stats[k]+=v;msg+=`\n${statNames[k]} +${v}`}}if(adds.boss&&state.bosses[adds.boss]){let b=state.bosses[adds.boss];let before=b.hp;b.hp=Math.max(0,b.hp-dmg);msg+=`\n👾${adds.boss}に${dmg}ダメージ！`;if(before>0&&b.hp===0){state.exp+=100;state.gems+=5;addBadge(`討伐：${adds.boss}`);msg+=`\n🎉撃破報酬 +100EXP / 💎+5`}}addLog(msg);snapshot();levelUp()}
+function doFreeQuest(label,exp,adds,boss){adds.boss=boss;applyReward(label,exp,adds,40);save();render()}
+function quickStudy(){doFreeQuest("10分復習",30,{base:2,clinical:2,human:1},"睡魔スライム")}
+function snapshot(){state.history.push({date:todayStr(),...state.stats});state.history=state.history.slice(-30)}
+function render(){document.getElementById("level").textContent=state.level;document.getElementById("exp").textContent=state.exp;document.getElementById("nextExp").textContent=nextExp();document.getElementById("expFill").style.width=Math.min(100,state.exp/nextExp()*100)+"%";document.getElementById("job").textContent=job();document.getElementById("gems").textContent=state.gems;document.getElementById("streak").textContent=state.streak;document.getElementById("dailyNotice").textContent=`今日も来たね！授業がない日でもフリークエストで成長できるよ。`;renderDates();renderLessons();renderStats();renderBosses();renderBadges();renderMemos();renderLog();drawChart()}
+function renderDates(){let sel=document.getElementById("dateSelect");let old=sel.value;let dates=[...new Set(allLessons().map(x=>x[0]))].sort((a,b)=>dateObj(a)-dateObj(b));let t=todayStr();if(!dates.includes(t))dates.unshift(t);sel.innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join("");sel.value=old||t}
+function renderLessons(){let d=document.getElementById("dateSelect").value;let list=allLessons().filter(x=>x[0]===d);let el=document.getElementById("lessons");if(!list.length){el.innerHTML=`<div class="notice">今日は授業データなし！<br>フリークエストでEXPを稼ごう。</div>`;return}el.innerHTML=list.map(([d,p,n])=>{let r=rule(n),done=!!state.done[lid(d,p,n)],adds=Object.keys(statNames).filter(k=>r[k]).map(k=>`${statNames[k]}+${r[k]}`).join(" ");return`<div class="lesson ${done?'done':''}"><div><div class="lessonTitle">${p} ${n}</div><div class="lessonMeta">${adds} / ボス：${r.boss}</div></div><button class="btn" ${done?'disabled':''} onclick="completeLesson('${d}','${p}','${n}')">${done?'済':'完了'}</button></div>`}).join("")}
+function renderStats(){let el=document.getElementById("stats");el.innerHTML=Object.keys(statNames).map(k=>`<div class="statRow"><div>${statNames[k]}</div><div class="statBar"><div class="statFill" style="width:${Math.min(100,state.stats[k])}%"></div></div><div>${state.stats[k]}</div></div>`).join("")}
+function renderBosses(){let el=document.getElementById("bosses");el.innerHTML=Object.entries(state.bosses).map(([n,b])=>`<div class="lesson"><div style="width:100%"><div class="lessonTitle">👾${n}</div><div class="bar"><div class="fill" style="width:${100-b.hp/b.max*100}%"></div></div><div class="small">HP ${b.hp}/${b.max}</div></div></div>`).join("")}
+function renderBadges(){document.getElementById("badges").innerHTML=state.badges.length?state.badges.map(b=>`<span class="badge">🏅${b}</span>`).join(""):"<div class='small'>まだ称号なし</div>"}
+function saveMemo(){let text=document.getElementById("memoInput").value.trim();if(!text)return;state.memos.unshift({date:todayStr(),text});document.getElementById("memoInput").value="";state.exp+=10;addLog("📝メモ保存！ +10EXP");levelUp();save();render()}
+function renderMemos(){document.getElementById("memoList").innerHTML=state.memos.length?state.memos.map(m=>`<div class="lesson"><div><div class="lessonTitle">${m.date}</div><div class="lessonMeta">${m.text.replace(/</g,"&lt;")}</div></div></div>`).join(""):"<div class='small'>まだメモなし</div>"}
+function renderLog(){document.getElementById("log").textContent=state.log.slice(0,10).join("\n\n")}
+function addLesson(){let d=addDate.value.trim(),p=addPeriod.value.trim(),n=addSubject.value.trim();if(!d||!p||!n)return alert("日付・時限・科目を入れてね");state.extraLessons.push([d,p,n]);addLog(`➕授業追加：${d} ${p} ${n}`);save();render()}
+function importSchedule(){try{let arr=JSON.parse(jsonImport.value);if(!Array.isArray(arr))throw Error();state.extraLessons=arr;addLog(`📥時間割データ取り込み：${arr.length}件`);save();render();alert("取り込み完了！")}catch(e){alert("JSON形式が違うかも！")}}
+function exportSave(){saveBox.value=JSON.stringify(state);saveBox.select();addLog("💾セーブを書き出したよ");save();renderLog()}
+function importSave(){try{let s=JSON.parse(saveBox.value);if(!s||!s.stats)throw Error();state=s;save();render();alert("セーブ読み込み完了！")}catch(e){alert("読み込み失敗！")}}
+function rollGacha(){if(state.gems<10)return alert("💎が10必要！");state.gems-=10;let r=Math.random(),res=r<.03?"UR 学年1位ゆかりん":r<.13?"SSR 未来の看護師ゆかりん":r<.33?"SR 今日のゆかりん偉い":r<.65?"R ちゃんと進んでる":"N 今日は寝ろ";document.getElementById("gachaResult").textContent=res;addBadge(`ガチャ：${res}`);save();render()}
+function resetGame(){if(confirm("本当に初期化？バックアップ推奨！")){localStorage.removeItem(KEY);location.reload()}}
+function showTab(id,btn){document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");if(id==="home")drawChart()}
+function drawChart(){let c=document.getElementById("chart"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);let keys=Object.keys(statNames),vals=keys.map(k=>state.stats[k]);let max=Math.max(10,...vals);keys.forEach((k,i)=>{let w=(vals[i]/max)*(c.width-160);let y=18+i*31;ctx.fillStyle="#fff8d7";ctx.font="14px sans-serif";ctx.fillText(statNames[k],10,y+14);ctx.fillStyle="#7cff6b";ctx.fillRect(120,y,w,18);ctx.fillStyle="#fff8d7";ctx.fillText(vals[i],130+w,y+14)})}
+loginBonus(); render();
 </script>
 </body>
 </html>
