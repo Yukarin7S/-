@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Nurse Quest - ゆかりん編</title>
+<style>
+  :root{
+    --bg:#161225;
+    --panel:#241b3d;
+    --panel2:#30234f;
+    --accent:#7cff6b;
+    --accent2:#ffd43b;
+    --danger:#ff5d73;
+    --text:#fff7d6;
+    --muted:#c9bde6;
+    --line:#5e4a91;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at top, #49316f 0, #161225 55%),
+      linear-gradient(180deg,#161225,#090713);
+    color:var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    padding:14px;
+  }
+  .app{max-width:520px;margin:0 auto;padding-bottom:24px}
+  .title{
+    text-align:center;
+    font-weight:900;
+    font-size:26px;
+    color:var(--accent2);
+    text-shadow:3px 3px 0 #000;
+    margin:8px 0 12px;
+    letter-spacing:.03em;
+  }
+  .card{
+    background:linear-gradient(180deg,var(--panel),#181126);
+    border:3px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 8px 0 #080510, 0 0 0 2px #000 inset;
+    padding:14px;
+    margin:14px 0;
+  }
+  .heroBox{
+    display:grid;
+    grid-template-columns:118px 1fr;
+    gap:12px;
+    align-items:center;
+  }
+  .hero{
+    width:118px;height:118px;border-radius:22px;
+    background:#fff;
+    object-fit:cover;
+    border:4px solid #000;
+    box-shadow:0 5px 0 #090510;
+  }
+  .name{font-weight:900;font-size:19px}
+  .job{color:var(--muted);font-size:13px;margin:3px 0 8px}
+  .lv{font-size:22px;font-weight:900;color:var(--accent)}
+  .bar{
+    height:18px;background:#0b0712;border:2px solid #000;border-radius:12px;overflow:hidden;margin:7px 0;
+  }
+  .fill{height:100%;background:linear-gradient(90deg,var(--accent),#d5ff65);width:0%}
+  .small{font-size:12px;color:var(--muted)}
+  h2{font-size:18px;margin:0 0 10px;color:var(--accent2)}
+  .stats{display:grid;gap:8px}
+  .statRow{display:grid;grid-template-columns:86px 1fr 42px;gap:8px;align-items:center;font-size:13px}
+  .statBar{height:12px;background:#0b0712;border:2px solid #000;border-radius:9px;overflow:hidden}
+  .statFill{height:100%;background:var(--accent);width:0%}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}
+  .tab,.btn{
+    border:3px solid #000;
+    border-radius:14px;
+    background:linear-gradient(180deg,#fff1a8,#f7b733);
+    color:#20120b;
+    font-weight:900;
+    padding:10px 8px;
+    box-shadow:0 5px 0 #080510;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  .tab.active{background:linear-gradient(180deg,#9dff8f,#34c759)}
+  .btn:active,.tab:active{transform:translateY(3px);box-shadow:0 2px 0 #080510}
+  .lesson{
+    background:var(--panel2);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:10px;
+    margin:8px 0;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+    align-items:center;
+  }
+  .lesson.done{opacity:.55}
+  .lessonTitle{font-weight:900}
+  .lessonMeta{font-size:12px;color:var(--muted);margin-top:3px}
+  .bossHp{font-size:13px;margin-top:6px}
+  .badge{
+    display:inline-block;
+    margin:4px 4px 0 0;
+    padding:6px 9px;
+    border-radius:999px;
+    background:#100b1d;
+    border:2px solid var(--line);
+    font-size:12px;
+  }
+  .log{
+    background:#0b0712;
+    border:2px solid #000;
+    border-radius:12px;
+    padding:10px;
+    min-height:74px;
+    white-space:pre-wrap;
+    font-size:13px;
+    color:#d8ffd5;
+  }
+  textarea{
+    width:100%;
+    min-height:84px;
+    border-radius:14px;
+    padding:10px;
+    border:3px solid #000;
+    background:#fff8d8;
+    color:#20120b;
+    font-size:15px;
+  }
+  .danger{background:linear-gradient(180deg,#ff9aa8,#ff5d73);color:#fff}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="title">🎮 Nurse Quest<br>ゆかりん編</div>
+
+  <section class="card heroBox">
+    <img class="hero" src="yukarin_hero.jpeg" alt="主人公ゆかりん">
+    <div>
+      <div class="name">ゆかりん</div>
+      <div class="job" id="job">看護学生見習い</div>
+      <div class="lv">Lv.<span id="level">1</span></div>
+      <div class="bar"><div class="fill" id="expFill"></div></div>
+      <div class="small">EXP <span id="exp">0</span> / <span id="nextExp">100</span></div>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('home', this)">ホーム</button>
+    <button class="tab" onclick="showTab('boss', this)">ボス</button>
+    <button class="tab" onclick="showTab('badge', this)">称号</button>
+    <button class="tab" onclick="showTab('memo', this)">メモ</button>
+  </div>
+
+  <section id="home" class="screen">
+    <section class="card">
+      <h2>📅 今日のクエスト</h2>
+      <div class="small">日付を選んで授業ボタンを押すと、EXPとステータスが上がるよ</div>
+      <select id="dateSelect" class="btn" style="width:100%;margin:10px 0;" onchange="renderLessons()"></select>
+      <div id="lessons"></div>
+      <button class="btn" style="width:100%;margin-top:8px" onclick="quickStudy()">🔥 10分復習した！</button>
+    </section>
+
+    <section class="card">
+      <h2>📊 ステータス</h2>
+      <div class="stats" id="stats"></div>
+    </section>
+  </section>
+
+  <section id="boss" class="screen hidden">
+    <section class="card">
+      <h2>👾 ボス戦</h2>
+      <div id="bosses"></div>
+    </section>
+  </section>
+
+  <section id="badge" class="screen hidden">
+    <section class="card">
+      <h2>🏅 称号</h2>
+      <div id="badges"></div>
+    </section>
+  </section>
+
+  <section id="memo" class="screen hidden">
+    <section class="card">
+      <h2>📝 今日わかったこと</h2>
+      <textarea id="memoText" placeholder="例：IgAは粘膜！"></textarea>
+      <button class="btn" style="width:100%;margin-top:8px" onclick="saveMemo()">保存</button>
+    </section>
+    <section class="card">
+      <h2>📜 ログ</h2>
+      <div class="log" id="log"></div>
+      <button class="btn danger" style="width:100%;margin-top:8px" onclick="resetGame()">セーブ初期化</button>
+    </section>
+  </section>
+</div>
+
+<script>
+const lessons = [
+["2026/6/2","1限","病理"],["2026/6/2","2限","微生物"],["2026/6/2","3限","形態Ⅱ"],["2026/6/2","4限","生化学"],
+["2026/6/3","1限","形態Ⅳ"],["2026/6/3","2限","物理学"],["2026/6/3","3限","生活援助論Ⅲ"],
+["2026/6/4","1限","形態Ⅰ"],["2026/6/4","2限","看護学概論"],["2026/6/4","3限","自己学習"],["2026/6/4","4限","自己学習"],
+["2026/6/5","1限","自己学習"],["2026/6/5","2限","形態Ⅳ"],["2026/6/5","3限","医安"],["2026/6/5","4限","医安"],
+["2026/6/8","1限","パフォーマンス論"],["2026/6/8","2限","看護学概論"],["2026/6/8","3限","生活Ⅲ"],["2026/6/8","4限","心理学"],
+["2026/6/9","1限","物資購入"],["2026/6/9","2限","病理"],["2026/6/9","3限","微生物"],["2026/6/9","4限","形態Ⅱ"],
+["2026/6/10","1限","人間関係"],["2026/6/10","2限","物理学"],["2026/6/10","3限","生化学"],["2026/6/10","4限","形態Ⅳ"],
+["2026/6/11","1限","生活援助論Ⅰ"],["2026/6/11","2限","形態Ⅰ"],["2026/6/11","3限","形態Ⅲ"],["2026/6/11","4限","自己学習"],
+["2026/6/12","1限","生活援助論Ⅲ"],["2026/6/12","2限","生活援助論Ⅲ"],["2026/6/12","3限","形態Ⅲ"],["2026/6/12","4限","自己学習"],
+["2026/6/15","1限","形態Ⅲ"],["2026/6/15","2限","心理学"],["2026/6/15","3限","コミュニケーション"],["2026/6/15","4限","生化学"],
+["2026/6/16","1限","病理"],["2026/6/16","2限","微生物"],["2026/6/16","3限","微生物"],["2026/6/16","4限","物資購入"],
+["2026/6/17","1限","看護学概論"],["2026/6/17","2限","形態Ⅳ"],["2026/6/17","3限","人間関係"],["2026/6/17","4限","人間関係"],
+["2026/6/18","1限","疾病Ⅱ"],["2026/6/18","2限","疾病Ⅱ"],["2026/6/18","3限","形態Ⅳ"],["2026/6/18","4限","形態Ⅱ"],
+["2026/6/19","1限","形態Ⅲ"],["2026/6/19","2限","形態Ⅰ"],["2026/6/19","3限","生活Ⅲ"],["2026/6/19","4限","コミュニケーション"],
+["2026/6/22","1限","医安"],["2026/6/22","2限","病理"],["2026/6/22","3限","心理学"],["2026/6/22","4限","形態Ⅳ"],
+["2026/6/23","1限","臨地実習オリエンテーション"],["2026/6/23","2限","病理"],["2026/6/23","3限","生化学"],["2026/6/23","4限","生活Ⅱ"],
+["2026/6/24","1限","病理"],["2026/6/24","2限","疾病Ⅱ"],["2026/6/24","3限","生活援助論Ⅰ"],["2026/6/24","4限","形態Ⅱ"],
+["2026/6/25","1限","物理学"],["2026/6/25","2限","疾病Ⅱ"],["2026/6/25","3限","生化学"],["2026/6/25","4限","人間関係"],
+["2026/6/26","1限","病理"],["2026/6/26","2限","国試オリエンテーション"],["2026/6/26","3限","形態Ⅰ"],["2026/6/26","4限","看護学概論"],
+["2026/6/29","1限","疾病Ⅱ"],["2026/6/29","2限","物資購入"],["2026/6/29","3限","生化学"],["2026/6/29","4限","心理学"],
+["2026/6/30","1限","コミュニケーション"],["2026/6/30","2限","人間関係"],["2026/6/30","3限","微生物"],["2026/6/30","4限","疾病Ⅱ"]
+];
+
+const statNames = {
+  base:"📚基礎知識", clinical:"🧠臨床推論", skill:"🩺実践技術", nursing:"📝看護力", human:"🔥人間力"
+};
+
+const map = {
+  "形態":{base:8, clinical:1, boss:"人体マニア"},
+  "微生物":{base:8, clinical:3, boss:"微生物ドラゴン"},
+  "病理":{base:7, clinical:4, boss:"病理キマイラ"},
+  "生化学":{base:7, clinical:1, boss:"知識ゴーレム"},
+  "疾病":{base:6, clinical:6, boss:"臨床推論デーモン"},
+  "物理":{base:5, clinical:2, boss:"計算スライム"},
+  "生活援助":{skill:8, nursing:4, boss:"援助ゴーレム"},
+  "生活Ⅲ":{skill:5, nursing:4, boss:"援助ゴーレム"},
+  "生活Ⅱ":{skill:4, nursing:4, boss:"援助ゴーレム"},
+  "医安":{skill:6, nursing:5, clinical:2, boss:"医療安全ナイト"},
+  "看護学概論":{nursing:8, human:2, boss:"ナイチンゲールの影"},
+  "人間関係":{human:8, nursing:3, boss:"人間関係フェアリー"},
+  "コミュ":{human:8, nursing:2, boss:"人間関係フェアリー"},
+  "心理":{human:6, clinical:3, boss:"こころの森"},
+  "パフォーマンス":{human:7, boss:"発表スライム"},
+  "地在":{nursing:5, clinical:4, human:2, boss:"地域理解ビースト"},
+  "臨地":{skill:5, nursing:6, human:4, boss:"実習指導者"},
+  "自己学習":{base:2, clinical:2, human:2, boss:"睡魔スライム"},
+  "国試":{base:5, clinical:5, nursing:3, boss:"国試ラスボス"}
+};
+
+const bossDefs = {
+  "微生物ドラゴン": 800, "病理キマイラ": 900, "援助ゴーレム": 900, "実習指導者": 1200,
+  "人体マニア": 1000, "知識ゴーレム": 700, "臨床推論デーモン": 1000, "計算スライム": 400,
+  "医療安全ナイト": 800, "ナイチンゲールの影": 700, "人間関係フェアリー": 700,
+  "こころの森": 500, "発表スライム": 400, "地域理解ビースト": 600, "睡魔スライム": 500,
+  "国試ラスボス": 3000
+};
+
+let state = JSON.parse(localStorage.getItem("nurseQuestYukarin") || "null") || {
+  exp:0, level:1, stats:{base:0,clinical:0,skill:0,nursing:0,human:0},
+  done:{}, badges:[], log:["冒険開始！ゆかりん看護学生RPG、起動！"], memo:"",
+  bosses:Object.fromEntries(Object.entries(bossDefs).map(([k,v])=>[k,{max:v,hp:v}]))
+};
+
+function save(){ localStorage.setItem("nurseQuestYukarin", JSON.stringify(state)); }
+function nextExp(){ return state.level * 100; }
+function calcJob(){
+  if(state.level>=50) return "臨床アタッカー";
+  if(state.level>=35) return "病棟ルーキー";
+  if(state.level>=20) return "実習候補生";
+  if(state.level>=10) return "基礎看護兵";
+  return "看護学生見習い";
+}
+function levelUp(){
+  let up=false;
+  while(state.exp >= nextExp()){
+    state.exp -= nextExp();
+    state.level++;
+    up=true;
+    state.log.unshift(`🎉 LEVEL UP！ Lv.${state.level-1} → Lv.${state.level}`);
+  }
+  if(up) unlockBadges();
+}
+function getRule(name){
+  for(const key in map){ if(name.includes(key)) return map[key]; }
+  return {base:2,human:1,boss:"睡魔スライム"};
+}
+function lessonId(date, period, name){ return `${date}_${period}_${name}`; }
+function completeLesson(date, period, name){
+  const id=lessonId(date,period,name);
+  if(state.done[id]) return;
+  state.done[id]=true;
+  const rule=getRule(name);
+  let gained=40;
+  let msg=`✅ ${period} ${name} 完了！\n+${gained}EXP`;
+  state.exp += gained;
+  for(const k of Object.keys(statNames)){
+    const v=rule[k]||0;
+    if(v){ state.stats[k]+=v; msg+=`\n${statNames[k]} +${v}`; }
+  }
+  if(rule.boss && state.bosses[rule.boss]){
+    const dmg=50;
+    state.bosses[rule.boss].hp=Math.max(0,state.bosses[rule.boss].hp-dmg);
+    msg+=`\n👾 ${rule.boss}に${dmg}ダメージ！`;
+    if(state.bosses[rule.boss].hp===0) addBadge(`討伐：${rule.boss}`);
+  }
+  state.log.unshift(msg);
+  levelUp(); unlockBadges(); save(); render();
+}
+function quickStudy(){
+  state.exp+=30;
+  state.stats.base+=2; state.stats.clinical+=2; state.stats.human+=1;
+  state.bosses["睡魔スライム"].hp=Math.max(0,state.bosses["睡魔スライム"].hp-40);
+  state.log.unshift("🔥 10分復習！\n+30EXP\n📚基礎知識 +2\n🧠臨床推論 +2\n🔥人間力 +1");
+  levelUp(); unlockBadges(); save(); render();
+}
+function addBadge(name){
+  if(!state.badges.includes(name)){
+    state.badges.push(name);
+    state.log.unshift(`🏅称号獲得：${name}`);
+  }
+}
+function unlockBadges(){
+  if(state.level>=5) addBadge("毎日ログイン候補生");
+  if(state.level>=10) addBadge("基礎看護兵");
+  if(state.stats.base>=100) addBadge("人体マニア");
+  if(state.stats.clinical>=80) addBadge("考える看護学生");
+  if(state.stats.skill>=80) addBadge("援助マスター");
+  if(state.stats.nursing>=80) addBadge("ナイチンゲールの弟子");
+  if(state.stats.human>=80) addBadge("共感の使徒");
+}
+function render(){
+  document.getElementById("level").textContent=state.level;
+  document.getElementById("exp").textContent=state.exp;
+  document.getElementById("nextExp").textContent=nextExp();
+  document.getElementById("job").textContent=calcJob();
+  document.getElementById("expFill").style.width=Math.min(100, state.exp/nextExp()*100)+"%";
+  renderStats(); renderLessons(); renderBosses(); renderBadges();
+  document.getElementById("log").textContent=state.log.slice(0,8).join("\n\n");
+  document.getElementById("memoText").value=state.memo || "";
+}
+function renderStats(){
+  const el=document.getElementById("stats"); el.innerHTML="";
+  for(const k of Object.keys(statNames)){
+    const v=state.stats[k];
+    el.innerHTML += `<div class="statRow"><div>${statNames[k]}</div><div class="statBar"><div class="statFill" style="width:${Math.min(100,v)}%"></div></div><div>${v}</div></div>`;
+  }
+}
+function initDates(){
+  const dates=[...new Set(lessons.map(x=>x[0]))];
+  const sel=document.getElementById("dateSelect");
+  sel.innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join("");
+  const today=new Date();
+  const t=`${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`;
+  if(dates.includes(t)) sel.value=t;
+}
+function renderLessons(){
+  const date=document.getElementById("dateSelect").value;
+  const list=lessons.filter(x=>x[0]===date);
+  const el=document.getElementById("lessons"); if(!el) return;
+  el.innerHTML = list.map(([d,p,n])=>{
+    const id=lessonId(d,p,n), done=!!state.done[id], rule=getRule(n);
+    const adds=Object.keys(statNames).filter(k=>rule[k]).map(k=>`${statNames[k]}+${rule[k]}`).join(" ");
+    return `<div class="lesson ${done?'done':''}">
+      <div><div class="lessonTitle">${p} ${n}</div><div class="lessonMeta">${adds || "EXP獲得"} / ボス：${rule.boss}</div></div>
+      <button class="btn" onclick="completeLesson('${d}','${p}','${n}')" ${done?'disabled':''}>${done?'済':'完了'}</button>
+    </div>`;
+  }).join("") || `<div class="small">この日の授業データはまだないよ</div>`;
+}
+function renderBosses(){
+  const el=document.getElementById("bosses"); el.innerHTML="";
+  for(const [name,b] of Object.entries(state.bosses)){
+    const pct=(b.max-b.hp)/b.max*100;
+    el.innerHTML += `<div class="lesson"><div style="width:100%">
+      <div class="lessonTitle">👾 ${name}</div>
+      <div class="bar"><div class="fill" style="width:${100-b.hp/b.max*100}%"></div></div>
+      <div class="bossHp">HP ${b.hp} / ${b.max}</div>
+    </div></div>`;
+  }
+}
+function renderBadges(){
+  const el=document.getElementById("badges");
+  el.innerHTML = state.badges.length ? state.badges.map(b=>`<span class="badge">🏅${b}</span>`).join("") : `<div class="small">まだ称号なし。今日の授業を倒しに行こう！</div>`;
+}
+function saveMemo(){
+  state.memo=document.getElementById("memoText").value;
+  state.exp+=10;
+  state.log.unshift("📝 メモ保存！ +10EXP");
+  levelUp(); save(); render();
+}
+function resetGame(){
+  if(confirm("本当に初期化する？")){
+    localStorage.removeItem("nurseQuestYukarin");
+    location.reload();
+  }
+}
+function showTab(id, btn){
+  document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}
+initDates(); render();
+</script>
+</body>
+</html>
