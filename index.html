@@ -1,188 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>Nurse Quest v1.1 - ゆかりん編</title>
-<style>
-:root{--p:#24183f;--p2:#322456;--line:#6b55a6;--txt:#fff8d7;--mut:#cbbfe8;--y:#ffd84d;--g:#7cff6b;--r:#ff5d73;--b:#76d7ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#4a3172,#151024 54%,#080610);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;padding:14px}
-.app{max-width:540px;margin:auto;padding-bottom:78px}.title{text-align:center;font-weight:900;font-size:26px;color:var(--y);text-shadow:3px 3px #000;margin:8px 0 12px}
-.card{background:linear-gradient(180deg,var(--p),#171026);border:3px solid var(--line);border-radius:18px;box-shadow:0 8px 0 #080510,0 0 0 2px #000 inset;padding:14px;margin:14px 0}
-.heroBox{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:center}.hero{width:118px;height:118px;border-radius:22px;object-fit:cover;border:4px solid #000;background:#fff;box-shadow:0 5px #080510}
-.name{font-size:19px;font-weight:900}.job{font-size:13px;color:var(--mut);margin:3px 0 8px}.lv{font-size:22px;font-weight:900;color:var(--g)}
-.bar{height:18px;background:#0b0712;border:2px solid #000;border-radius:12px;overflow:hidden;margin:7px 0}.fill{height:100%;background:linear-gradient(90deg,var(--g),#d5ff65);width:0%;transition:.25s}
-.hpfill{height:100%;width:100%;transition:.25s;background:var(--g)}.hpfill.mid{background:var(--y)}.hpfill.low{background:var(--r)}
-.small{font-size:12px;color:var(--mut)}h2{font-size:18px;margin:0 0 10px;color:var(--y)}
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}.tab,.btn,select,input,textarea{font:inherit}
-.tab,.btn{border:3px solid #000;border-radius:14px;background:linear-gradient(180deg,#fff1a8,#f7b733);color:#20120b;font-weight:900;padding:10px 7px;box-shadow:0 5px #080510;cursor:pointer;touch-action:manipulation}
-.tab{font-size:12px}.tab.active{background:linear-gradient(180deg,#9dff8f,#34c759)}.btn.blue{background:linear-gradient(180deg,#a9ecff,#43b8e8)}.btn.red{background:linear-gradient(180deg,#ff9aa8,#ff5d73);color:#fff}.btn.purple{background:linear-gradient(180deg,#d9b8ff,#9b5cff)}.btn.green{background:linear-gradient(180deg,#9dff8f,#34c759)}
-.btn:active,.tab:active{transform:translateY(3px);box-shadow:0 2px #080510}
-.lesson{background:var(--p2);border:2px solid var(--line);border-radius:14px;padding:10px;margin:8px 0;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.lesson.done{opacity:.58}.lesson.exam{border-color:var(--y)}
-.lessonTitle{font-weight:900}.lessonMeta{font-size:12px;color:var(--mut);margin-top:3px}
-.stats{display:grid;gap:8px}.statRow{display:grid;grid-template-columns:92px 1fr 44px;gap:8px;align-items:center;font-size:13px}.statBar{height:12px;background:#0b0712;border:2px solid #000;border-radius:9px;overflow:hidden}.statFill{height:100%;background:var(--g)}
-.badge{display:inline-block;margin:4px 4px 0 0;padding:6px 9px;border-radius:999px;background:#100b1d;border:2px solid var(--line);font-size:12px}.log{background:#0b0712;border:2px solid #000;border-radius:12px;padding:10px;white-space:pre-wrap;font-size:13px;color:#d8ffd5;min-height:90px}
-textarea,input,select{width:100%;border-radius:14px;padding:10px;border:3px solid #000;background:#fff8d8;color:#20120b;margin:5px 0}textarea{min-height:90px}.hidden{display:none}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.notice{border:2px dashed var(--y);padding:10px;border-radius:14px;background:#191126}
-.study-float{position:fixed;right:12px;bottom:12px;z-index:10;border:3px solid #000;border-radius:999px;background:linear-gradient(180deg,#9dff8f,#34c759);color:#20120b;font-weight:900;padding:10px 12px;box-shadow:0 5px #080510;font-size:13px}
-.modalBack{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:20;display:none;align-items:center;justify-content:center;padding:14px}.modal{max-width:520px;width:100%;background:var(--p);border:3px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px #080510}.modalBack.show{display:flex}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#6d28d9">
+  <meta name="description" content="ゆかりん専用 Nurse Quest Life OS">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <title>Nurse Quest Life OS</title>
 </head>
 <body>
-<div class="app">
-  <div class="title">🎮 Nurse Quest v1.1<br>ゆかりん編</div>
-
-  <section class="card heroBox">
-    <img class="hero" src="yukarin_hero.jpeg" alt="主人公ゆかりん">
+  <header class="topbar">
     <div>
-      <div class="name">ゆかりん</div><div class="job" id="job"></div>
-      <div class="lv">Lv.<span id="level"></span></div>
-      <div class="bar"><div class="fill" id="expFill"></div></div>
-      <div class="small">EXP <span id="exp"></span> / <span id="nextExp"></span>　💎<span id="gems"></span></div>
-      <div class="small">🔥連続ログイン <span id="streak"></span>日　🎯今日 <span id="todayExp"></span>/150EXP</div>
+      <small id="todayLabel"></small>
+      <h1>Nurse Quest <span>Life OS</span></h1>
     </div>
-  </section>
+    <button class="icon-btn" id="syncBtn" aria-label="同期">↻</button>
+  </header>
 
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('home',this)">ホーム</button>
-    <button class="tab" onclick="showTab('study',this)">自習</button>
-    <button class="tab" onclick="showTab('boss',this)">ボス</button>
-    <button class="tab" onclick="showTab('memo',this)">メモ</button>
-    <button class="tab" onclick="showTab('more',this)">設定</button>
-  </div>
-
-  <section id="home" class="screen">
-    <section class="card">
-      <h2>📅 今日のクエスト</h2>
-      <div class="notice" id="dailyNotice"></div>
-      <select id="dateSelect" onchange="renderLessons()"></select>
-      <div id="examEvents"></div>
-      <div id="lessons"></div>
-      <div class="grid2">
-        <button class="btn green" onclick="openStudyQuick()">⏰自習入力</button>
-        <button class="btn blue" onclick="doFreeQuest('課題を進めた',45,{nursing:3,human:2},'課題ドラゴン')">📝課題</button>
+  <main>
+    <section class="hero card">
+      <div>
+        <p class="eyebrow">おはよう、ゆかりん</p>
+        <h2 id="secretaryMessage">今日は最低ラインだけでも100点。</h2>
       </div>
-      <button class="btn red" style="width:100%;margin-top:8px" onclick="undoLast()">↩️ 直前の行動を取り消す</button>
+      <div class="level">
+        <b>Lv.<span id="level">1</span></b>
+        <div class="bar"><i id="expBar"></i></div>
+        <small><span id="exp">0</span> EXP</small>
+      </div>
     </section>
-    <section class="card"><h2>📊 ステータス</h2><div id="stats" class="stats"></div></section>
-    <section class="card"><h2>⏱ 勉強時間</h2><div id="studySummary"></div></section>
-  </section>
 
-  <section id="study" class="screen hidden">
+    <section class="quick-grid">
+      <button class="quick" data-open="missionModal"><span>🎯</span>ミッション追加</button>
+      <button class="quick" data-open="expenseModal"><span>💰</span>支出入力</button>
+      <button class="quick" data-open="studyModal"><span>📚</span>課題追加</button>
+      <button class="quick" data-open="healthModal"><span>❤️</span>体調入力</button>
+    </section>
+
     <section class="card">
-      <h2>⏰ 自習記録</h2>
-      <input id="studyStart" placeholder="開始 10:00">
-      <input id="studyEnd" placeholder="終了 10:45">
-      <input id="studySubject" placeholder="科目 例：微生物">
-      <textarea id="studyMemo" placeholder="メモ 任意"></textarea>
-      <button class="btn green" style="width:100%" onclick="saveStudy()">自習を保存</button>
+      <div class="section-title">
+        <h3>今日のミッション</h3>
+        <button id="aiPlanBtn" class="small-btn">AIに決めてもらう</button>
+      </div>
+      <div id="missionList" class="list"></div>
+      <p id="missionEmpty" class="empty">まだミッションがありません。</p>
     </section>
-    <section class="card"><h2>📚 自習履歴</h2><div id="studyList"></div></section>
-  </section>
 
-  <section id="boss" class="screen hidden">
-    <section class="card"><h2>👾 今週のボス</h2><div id="weeklyBoss"></div></section>
-    <section class="card"><h2>👾 ボス戦</h2><div id="bosses"></div></section>
-    <section class="card"><h2>🎰 ガチャ</h2><div class="notice" id="gachaResult">💎10で1回</div><button class="btn purple" style="width:100%;margin-top:8px" onclick="rollGacha()">ガチャを回す</button></section>
-    <section class="card"><h2>🏅 称号・実績</h2><div id="badges"></div></section>
-  </section>
+    <section class="stats-grid">
+      <article class="card stat">
+        <small>今月の支出</small>
+        <strong id="monthExpense">¥0</strong>
+      </article>
+      <article class="card stat">
+        <small>未完了の課題</small>
+        <strong id="taskCount">0件</strong>
+      </article>
+      <article class="card stat">
+        <small>今日の家事</small>
+        <strong id="choreCount">0件</strong>
+      </article>
+      <article class="card stat">
+        <small>今日のHP</small>
+        <strong id="hpValue">80%</strong>
+      </article>
+    </section>
 
-  <section id="memo" class="screen hidden">
-    <section class="card"><h2>📝 今日わかったこと</h2><textarea id="memoInput" placeholder="例：IgAは粘膜！"></textarea><button class="btn" style="width:100%" onclick="saveMemo()">メモ保存 +10EXP</button></section>
-    <section class="card"><h2>📚 メモ履歴</h2><div id="memoList"></div></section>
-  </section>
-
-  <section id="more" class="screen hidden">
     <section class="card">
-      <h2>✏️ 授業編集・追加</h2>
-      <input id="addDate" placeholder="2026/7/1">
-      <input id="addPeriod" placeholder="1限">
-      <input id="addSubject" placeholder="科目名　⭐を付けると試験扱い">
-      <button class="btn" style="width:100%" onclick="addLesson()">授業を追加</button>
-      <div id="editLessons"></div>
+      <div class="section-title"><h3>家計簿</h3><button data-open="expenseModal" class="small-btn">追加</button></div>
+      <div id="expenseList" class="list compact"></div>
+      <p id="expenseEmpty" class="empty">今日の支出はまだありません。</p>
     </section>
-    <section class="card"><h2>📥 時間割データ取り込み</h2><textarea id="jsonImport" placeholder='[["2026/7/1","1限","⭐微生物"]]'></textarea><button class="btn blue" style="width:100%" onclick="importSchedule()">取り込む</button></section>
-    <section class="card"><h2>💾 セーブ保険</h2><button class="btn" style="width:100%;margin-bottom:8px" onclick="exportSave()">セーブを書き出す</button><textarea id="saveBox" placeholder="ここにバックアップが出る／読み込みデータを貼る"></textarea><button class="btn blue" style="width:100%;margin-bottom:8px" onclick="importSave()">セーブを読み込む</button><button class="btn red" style="width:100%" onclick="resetGame()">セーブ初期化</button></section>
-    <section class="card"><h2>📜 ログ</h2><div class="log" id="log"></div></section>
-  </section>
-</div>
 
-<button class="study-float" onclick="showStudyStats()">⏱<span id="floatStudy">0分</span></button>
-<div class="modalBack" id="modalBack" onclick="closeModal(event)"><div class="modal" id="modal"></div></div>
+    <section class="card">
+      <div class="section-title"><h3>課題・勉強</h3><button data-open="studyModal" class="small-btn">追加</button></div>
+      <div id="taskList" class="list compact"></div>
+      <p id="taskEmpty" class="empty">登録中の課題はありません。</p>
+    </section>
 
-<script>
-const DEFAULT_LESSONS=[
-["2026/6/2","1限","病理"],["2026/6/2","2限","微生物"],["2026/6/2","3限","形態Ⅱ"],["2026/6/2","4限","生化学"],
-["2026/6/3","1限","形態Ⅳ"],["2026/6/3","2限","物理学"],["2026/6/3","3限","生活援助論Ⅲ"],["2026/6/3","4限","物資購入"],
-["2026/6/4","1限","形態Ⅰ"],["2026/6/4","2限","看護学概論"],["2026/6/4","3限","自己学習"],["2026/6/4","4限","自己学習"],
-["2026/6/5","1限","自己学習"],["2026/6/5","2限","形態Ⅳ"],["2026/6/5","3限","医安"],["2026/6/5","4限","医安"],
-["2026/6/8","1限","⭐パフォーマンス論"],["2026/6/8","2限","看護学概論"],["2026/6/8","3限","生活Ⅲ"],["2026/6/8","4限","心理学"],
-["2026/6/9","1限","物資購入"],["2026/6/9","2限","病理"],["2026/6/9","3限","微生物"],["2026/6/9","4限","形態Ⅱ"],
-["2026/6/10","1限","人間関係"],["2026/6/10","2限","物理学"],["2026/6/10","3限","生化学"],["2026/6/10","4限","形態Ⅳ"],
-["2026/6/11","1限","生活援助論Ⅰ"],["2026/6/11","2限","形態Ⅰ"],["2026/6/11","3限","形態Ⅲ"],["2026/6/11","4限","自己学習"],
-["2026/6/12","1限","生活援助論Ⅲ"],["2026/6/12","2限","生活援助論Ⅲ"],["2026/6/12","3限","形態Ⅲ"],["2026/6/12","4限","自己学習"],
-["2026/6/15","1限","形態Ⅲ"],["2026/6/15","2限","心理学"],["2026/6/15","3限","コミュニケーション"],["2026/6/15","4限","生化学"],
-["2026/6/16","1限","病理"],["2026/6/16","2限","微生物"],["2026/6/16","3限","微生物"],["2026/6/16","4限","物資購入"],
-["2026/6/17","1限","看護学概論"],["2026/6/17","2限","形態Ⅳ"],["2026/6/17","3限","人間関係"],["2026/6/17","4限","人間関係"],
-["2026/6/18","1限","疾病Ⅱ"],["2026/6/18","2限","疾病Ⅱ"],["2026/6/18","3限","形態Ⅳ"],["2026/6/18","4限","形態Ⅱ"],
-["2026/6/19","1限","形態Ⅲ"],["2026/6/19","2限","形態Ⅰ"],["2026/6/19","3限","生活Ⅲ"],["2026/6/19","4限","コミュニケーション"],
-["2026/6/22","1限","⭐医安"],["2026/6/22","2限","病理"],["2026/6/22","3限","心理学"],["2026/6/22","4限","形態Ⅳ"],
-["2026/6/23","1限","臨地実習オリエンテーション"],["2026/6/23","2限","病理"],["2026/6/23","3限","生化学"],["2026/6/23","4限","生活Ⅱ"],
-["2026/6/24","1限","病理"],["2026/6/24","2限","疾病Ⅱ"],["2026/6/24","3限","生活援助論Ⅰ"],["2026/6/24","4限","形態Ⅱ"],
-["2026/6/25","1限","⭐物理学"],["2026/6/25","2限","疾病Ⅱ"],["2026/6/25","3限","生化学"],["2026/6/25","4限","人間関係"],
-["2026/6/26","1限","病理"],["2026/6/26","2限","国試オリエンテーション"],["2026/6/26","3限","形態Ⅰ"],["2026/6/26","4限","看護学概論"],
-["2026/6/29","1限","疾病Ⅱ"],["2026/6/29","2限","物資購入"],["2026/6/29","3限","生化学"],["2026/6/29","4限","心理学"],
-["2026/6/30","1限","コミュニケーション"],["2026/6/30","2限","人間関係"],["2026/6/30","3限","微生物"],["2026/6/30","4限","疾病Ⅱ"]
-];
-const statNames={base:"📚基礎知識",clinical:"🧠臨床推論",skill:"🩺実践技術",nursing:"📝看護力",human:"🔥人間力"};
-const map={"形態":{base:8,clinical:1,boss:"人体マニア"},"微生物":{base:8,clinical:3,boss:"微生物ドラゴン"},"病理":{base:7,clinical:4,boss:"病理キマイラ"},"生化学":{base:7,clinical:1,boss:"知識ゴーレム"},"疾病":{base:6,clinical:6,boss:"臨床推論デーモン"},"物理":{base:5,clinical:2,boss:"計算スライム"},"生活援助":{skill:8,nursing:4,boss:"援助ゴーレム"},"生活Ⅲ":{skill:5,nursing:4,boss:"援助ゴーレム"},"生活Ⅱ":{skill:4,nursing:4,boss:"援助ゴーレム"},"医安":{skill:6,nursing:5,clinical:2,boss:"医療安全ナイト"},"看護学概論":{nursing:8,human:2,boss:"ナイチンゲールの影"},"人間関係":{human:8,nursing:3,boss:"人間関係フェアリー"},"コミュ":{human:8,nursing:2,boss:"人間関係フェアリー"},"心理":{human:6,clinical:3,boss:"こころの森"},"パフォーマンス":{human:7,boss:"発表スライム"},"地在":{nursing:5,clinical:4,human:2,boss:"地域理解ビースト"},"臨地":{skill:5,nursing:6,human:4,boss:"実習指導者"},"自己学習":{base:2,clinical:2,human:2,boss:"睡魔スライム"},"国試":{base:5,clinical:5,nursing:3,boss:"国試ラスボス"}};
-const bossDefs={"微生物ドラゴン":800,"病理キマイラ":900,"援助ゴーレム":900,"実習指導者":1200,"人体マニア":1000,"知識ゴーレム":700,"臨床推論デーモン":1000,"計算スライム":400,"医療安全ナイト":800,"ナイチンゲールの影":700,"人間関係フェアリー":700,"こころの森":500,"発表スライム":400,"地域理解ビースト":600,"睡魔スライム":500,"課題ドラゴン":700,"国試ラスボス":3000};
-const KEY="nurseQuestYukarin";
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||{version:3,exp:0,level:1,gems:0,streak:0,lastLogin:"",stats:{base:0,clinical:0,skill:0,nursing:0,human:0},done:{},badges:[],log:["冒険開始！"],memos:[],studyLogs:[],todayExp:{},extraLessons:[],editedLessons:{},deletedLessons:{},examScores:{},lastAction:null,bosses:{}};
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function migrate(){for(const b in bossDefs){if(!state.bosses)state.bosses={};if(!state.bosses[b])state.bosses[b]={max:bossDefs[b],hp:bossDefs[b]}};["memos","studyLogs","extraLessons"].forEach(k=>{if(!state[k])state[k]=[]});["todayExp","editedLessons","deletedLessons","examScores","done"].forEach(k=>{if(!state[k])state[k]={}});if(!state.stats)state.stats={base:0,clinical:0,skill:0,nursing:0,human:0};if(!state.gems)state.gems=0;state.version=3;save()}
-function clone(x){return JSON.parse(JSON.stringify(x))}function setUndo(){state.lastAction=clone(state)}
-function todayStr(){let d=new Date();return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`}function dateObj(s){let [y,m,d]=s.split("/").map(Number);return new Date(y,m-1,d)}
-function minToText(m){let h=Math.floor(m/60),mm=m%60;return h?`${h}時間${mm}分`:`${mm}分`}function nextExp(){return state.level*100}
-function job(){if(state.level>=100)return"学年上位勢";if(state.level>=70)return"救急の卵";if(state.level>=50)return"臨床アタッカー";if(state.level>=35)return"病棟ルーキー";if(state.level>=20)return"実習候補生";if(state.level>=10)return"基礎看護兵";return"看護学生見習い"}
-function addLog(x){state.log.unshift(x);state.log=state.log.slice(0,40)}function addBadge(x){if(!state.badges.includes(x)){state.badges.push(x);addLog(`🏅称号獲得：${x}`)}}function addTodayExp(v){let t=todayStr();state.todayExp[t]=(state.todayExp[t]||0)+v}
-function levelUp(){while(state.exp>=nextExp()){state.exp-=nextExp();state.level++;addLog(`🎉LEVEL UP！ Lv.${state.level-1}→${state.level}`);state.gems+=3}unlockBadges()}
-function unlockBadges(){if(state.level>=10)addBadge("基礎看護兵");if(state.level>=20)addBadge("実習候補生");if(state.streak>=3)addBadge("3日連続ログイン");if(state.streak>=7)addBadge("7日連続ログイン");if(state.stats.base>=100)addBadge("人体マニア");if(state.stats.clinical>=80)addBadge("考える看護学生");if(state.stats.skill>=80)addBadge("援助マスター");if(state.stats.nursing>=80)addBadge("ナイチンゲールの弟子");if(state.stats.human>=80)addBadge("共感の使徒")}
-function loginBonus(){let t=todayStr();if(state.lastLogin===t)return;setUndo();let last=state.lastLogin?dateObj(state.lastLogin):null;let now=dateObj(t);let diff=last?Math.round((now-last)/86400000):999;state.streak=diff===1?state.streak+1:1;state.lastLogin=t;let bonus=40+Math.min(state.streak,30)*10;state.exp+=bonus;state.gems+=1;addTodayExp(bonus);addLog(`🎁ログインボーナス！\n連続${state.streak}日\n+${bonus}EXP / 💎+1`);levelUp();save()}
-function lid(d,p,n){return`${d}_${p}_${n}`}function cleanName(n){return n.replace(/^⭐/,"")}function isExam(n){return n.includes("⭐")}
-function allLessons(){return[...DEFAULT_LESSONS,...state.extraLessons].map(x=>state.editedLessons[lid(x[0],x[1],x[2])]||x).filter(x=>!state.deletedLessons[lid(x[0],x[1],x[2])])}
-function rule(name){let nm=cleanName(name);for(const k in map){if(nm.includes(k))return map[k]}return{base:2,human:1,boss:"睡魔スライム"}}
-function completeLesson(d,p,n){let id=lid(d,p,n);if(state.done[id])return;if(!confirm(`${p} ${n} を完了にする？`))return;setUndo();if(cleanName(n).includes("自己学習")){openSelfStudy(d,p,n);return}state.done[id]=true;if(isExam(n)){completeExam(d,p,n)}else{applyReward(`${p} ${n}`,40,rule(n),50)}save();render()}
-function completeExam(d,p,n){let score=prompt(`${cleanName(n)}試験の点数を入力してね（あとでなら空欄OK）`);let exp=120,gems=3,msg=`⭐${p} ${cleanName(n)} 試験クリア！\n+${exp}EXP / 💎+${gems}`;if(score!==null&&score.trim()!==""){score=parseInt(score,10);if(!isNaN(score)){state.examScores[lid(d,p,n)]=score;if(score>=100){exp=350;gems=10;addBadge("試験無双")}else if(score>=90){exp=250;gems=6}else if(score>=80){exp=170;gems=4}else{exp=100;gems=2}msg=`⭐${cleanName(n)}試験 ${score}点！\n+${exp}EXP / 💎+${gems}`}}state.exp+=exp;state.gems+=gems;addTodayExp(exp);addLog(msg);levelUp()}
-function applyReward(label,exp,adds,dmg){state.exp+=exp;addTodayExp(exp);let msg=`✅${label} 完了！\n+${exp}EXP`;for(const k in statNames){let v=adds[k]||0;if(v){state.stats[k]+=v;msg+=`\n${statNames[k]} +${v}`}}if(adds.boss&&state.bosses[adds.boss]){let b=state.bosses[adds.boss];let before=b.hp;b.hp=Math.max(0,b.hp-dmg);msg+=`\n👾${adds.boss}に${dmg}ダメージ！`;if(before>0&&b.hp===0){state.exp+=100;state.gems+=5;addTodayExp(100);addBadge(`討伐：${adds.boss}`);msg+=`\n🎉${adds.boss}討伐！\n+100EXP / 💎+5`}}addLog(msg);levelUp()}
-function doFreeQuest(label,exp,adds,boss){if(!confirm(`${label}を記録する？`))return;setUndo();adds.boss=boss;applyReward(label,exp,adds,40);save();render()}
-function openSelfStudy(d,p,n){let mins=prompt("自己学習、何分やった？ 0 / 15 / 30 / 45 / 60 など");if(mins===null)return;mins=parseInt(mins,10);if(isNaN(mins)||mins<0)mins=0;state.done[lid(d,p,n)]=true;if(mins===0){addLog(`📖${p} 自己学習：出席のみ\nEXPなし`)}else{recordStudy(d,"","",cleanName(n),mins,"自己学習時間")}save();render()}
-function openStudyQuick(){showTab('study',document.querySelectorAll('.tab')[1])}function timeToMin(t){let m=t.match(/^(\d{1,2}):(\d{2})$/);if(!m)return null;return parseInt(m[1])*60+parseInt(m[2])}
-function saveStudy(){let s=studyStart.value.trim(),e=studyEnd.value.trim(),sub=studySubject.value.trim()||"自習",memo=studyMemo.value.trim();let sm=timeToMin(s),em=timeToMin(e);if(sm===null||em===null)return alert("時間は 10:00 みたいに入れてね");let mins=em-sm;if(mins<0)mins+=1440;if(mins<=0)return alert("終了時間を確認してね");setUndo();recordStudy(todayStr(),s,e,sub,mins,memo);studyStart.value="";studyEnd.value="";studySubject.value="";studyMemo.value="";save();render()}
-function recordStudy(date,start,end,subject,mins,memo){let exp=Math.floor(mins/15)*30;let r=rule(subject);state.studyLogs.unshift({date,start,end,subject,mins,memo});state.exp+=exp;addTodayExp(exp);for(const k of Object.keys(statNames)){let add=Math.floor((r[k]||0)*mins/60);if(add)state.stats[k]+=add}if(r.boss&&state.bosses[r.boss]){let b=state.bosses[r.boss];let before=b.hp;b.hp=Math.max(0,b.hp-Math.floor(mins/15)*25);if(before>0&&b.hp===0){state.exp+=100;state.gems+=5;addBadge(`討伐：${r.boss}`)}}addLog(`⏰${subject} 自習 ${mins}分\n+${exp}EXP`);levelUp()}
-function undoLast(){if(!state.lastAction)return alert("取り消せる操作がないよ");state=state.lastAction;state.lastAction=null;save();render();alert("直前の操作を取り消したよ")}
-function saveMemo(){let text=memoInput.value.trim();if(!text)return;setUndo();state.memos.unshift({date:todayStr(),text});memoInput.value="";state.exp+=10;addTodayExp(10);addLog("📝メモ保存！ +10EXP");levelUp();save();render()}
-function addLesson(){let d=addDate.value.trim(),p=addPeriod.value.trim(),n=addSubject.value.trim();if(!d||!p||!n)return alert("日付・時限・科目を入れてね");setUndo();state.extraLessons.push([d,p,n]);addLog(`➕授業追加：${d} ${p} ${n}`);save();render()}
-function editLesson(d,p,n){let nd=prompt("日付",d);if(nd===null)return;let np=prompt("時限",p);if(np===null)return;let nn=prompt("科目名（⭐で試験）",n);if(nn===null)return;setUndo();state.editedLessons[lid(d,p,n)]=[nd,np,nn];addLog(`✏️授業変更：${d} ${p} ${n} → ${nd} ${np} ${nn}`);save();render()}
-function deleteLesson(d,p,n){if(!confirm(`${p} ${n} を削除する？`))return;setUndo();state.deletedLessons[lid(d,p,n)]=true;addLog(`🗑授業削除：${d} ${p} ${n}`);save();render()}
-function importSchedule(){try{let arr=JSON.parse(jsonImport.value);if(!Array.isArray(arr))throw Error();setUndo();state.extraLessons=arr;addLog(`📥時間割データ取り込み：${arr.length}件`);save();render();alert("取り込み完了！")}catch(e){alert("JSON形式が違うかも！")}}
-function exportSave(){saveBox.value=JSON.stringify(state);saveBox.select();addLog("💾セーブを書き出したよ");save();renderLog()}function importSave(){try{let s=JSON.parse(saveBox.value);if(!s||!s.stats)throw Error();setUndo();state=s;migrate();save();render();alert("セーブ読み込み完了！")}catch(e){alert("読み込み失敗！")}}
-function rollGacha(){if(state.gems<10)return alert("💎が10必要！");setUndo();state.gems-=10;let r=Math.random(),res,exp=0,gems=0;if(r<.03){res="UR 学年1位ゆかりん";exp=300;gems=10;addBadge("UR：学年1位ゆかりん")}else if(r<.13){res="SSR 未来の看護師ゆかりん";exp=100;gems=3}else if(r<.33){res="SR 今日のゆかりん偉い";exp=50}else if(r<.65){res="R ちゃんと進んでる";exp=15}else{res="N 今日は寝ろ";exp=5}state.exp+=exp;state.gems+=gems;addTodayExp(exp);gachaResult.textContent=`${res}\n+${exp}EXP ${gems?"/ 💎+"+gems:""}`;addLog(`🎰ガチャ：${res}\n+${exp}EXP ${gems?"/ 💎+"+gems:""}`);levelUp();save();render()}
-function studyStats(){let logs=state.studyLogs||[],now=dateObj(todayStr()),today=todayStr();let weekStart=new Date(now);weekStart.setDate(now.getDate()-((now.getDay()+6)%7));let monthStart=new Date(now.getFullYear(),now.getMonth(),1);let total=0,day=0,week=0,month=0,dates={};logs.forEach(l=>{let d=dateObj(l.date);total+=l.mins;dates[l.date]=true;if(l.date===today)day+=l.mins;if(d>=weekStart)week+=l.mins;if(d>=monthStart)month+=l.mins});let avg=Object.keys(dates).length?Math.round(total/Object.keys(dates).length):0;return{day,week,month,total,avg}}
-function showStudyStats(){let s=studyStats();showModal(`<h2>⏱勉強時間</h2><div class="notice">今日：${minToText(s.day)}<br>今週：${minToText(s.week)}<br>今月：${minToText(s.month)}<br>トータル：${minToText(s.total)}<br>1日平均：${minToText(s.avg)}</div><button class="btn" style="width:100%;margin-top:10px" onclick="hideModal()">閉じる</button>`)}function showModal(html){modal.innerHTML=html;modalBack.classList.add("show")}function hideModal(){modalBack.classList.remove("show")}function closeModal(e){if(e.target.id==="modalBack")hideModal()}
-function daysUntil(d){return Math.ceil((dateObj(d)-dateObj(todayStr()))/86400000)}
-function render(){level.textContent=state.level;exp.textContent=state.exp;nextExp.textContent=nextExp();expFill.style.width=Math.min(100,state.exp/nextExp()*100)+"%";job.textContent=job();gems.textContent=state.gems;streak.textContent=state.streak;todayExp.textContent=state.todayExp[todayStr()]||0;dailyNotice.textContent=(state.todayExp[todayStr()]||0)>=150?"🎉デイリー目標達成！":"今日も来たね！授業がない日でも自習で成長できるよ。";renderDates();renderLessons();renderStats();renderBosses();renderBadges();renderMemos();renderStudy();renderLog();renderEditLessons();renderExamEvents();floatStudy.textContent=minToText(studyStats().day)}
-function renderDates(){let sel=dateSelect,old=sel.value,dates=[...new Set(allLessons().map(x=>x[0]))].sort((a,b)=>dateObj(a)-dateObj(b));let t=todayStr();if(!dates.includes(t))dates.unshift(t);sel.innerHTML=dates.map(d=>`<option value="${d}">${d}</option>`).join("");sel.value=old||t}
-function renderExamEvents(){let exams=allLessons().filter(x=>isExam(x[2])&&daysUntil(x[0])>=0).sort((a,b)=>dateObj(a[0])-dateObj(b[0])).slice(0,3);examEvents.innerHTML=exams.length?`<div class="notice"><b>⭐試験イベント</b><br>${exams.map(x=>`${cleanName(x[2])}：あと${daysUntil(x[0])}日`).join("<br>")}</div>`:""}
-function renderLessons(){let d=dateSelect.value,list=allLessons().filter(x=>x[0]===d);if(!list.length){lessons.innerHTML=`<div class="notice">今日は授業データなし！<br>自習・課題でEXPを稼ごう。</div>`;return}lessons.innerHTML=list.map(([d,p,n])=>{let r=rule(n),done=!!state.done[lid(d,p,n)],adds=Object.keys(statNames).filter(k=>r[k]).map(k=>`${statNames[k]}+${r[k]}`).join(" ");let meta=isExam(n)?`⭐試験 / 点数入力あり`:(cleanName(n).includes("自己学習")?"自己学習は時間入力":"")+` ${adds} / ボス：${r.boss}`;return`<div class="lesson ${done?'done':''} ${isExam(n)?'exam':''}"><div><div class="lessonTitle">${p} ${n}</div><div class="lessonMeta">${meta}</div></div><div><button class="btn" ${done?'disabled':''} onclick="completeLesson('${d}','${p}','${n}')">${done?'済':'完了'}</button><button class="btn blue" style="margin-top:6px" onclick="editLesson('${d}','${p}','${n}')">✏️</button></div></div>`}).join("")}
-function renderStats(){stats.innerHTML=Object.keys(statNames).map(k=>`<div class="statRow"><div>${statNames[k]}</div><div class="statBar"><div class="statFill" style="width:${Math.min(100,state.stats[k])}%"></div></div><div>${state.stats[k]}</div></div>`).join("")}
-function hpClass(b){let p=b.hp/b.max;return p<.25?"low":p<.5?"mid":""}function bossHtml(n,b){return`<div class="lesson"><div style="width:100%"><div class="lessonTitle">👾${n}</div><div class="bar"><div class="hpfill ${hpClass(b)}" style="width:${Math.max(0,b.hp/b.max*100)}%"></div></div><div class="small">HP ${b.hp}/${b.max}</div></div></div>`}
-function renderBosses(){bosses.innerHTML=Object.entries(state.bosses).map(([n,b])=>bossHtml(n,b)).join("");let wb=Object.entries(state.bosses).filter(([n,b])=>b.hp>0).sort((a,b)=>a[1].hp/a[1].max-b[1].hp/b[1].max)[0];weeklyBoss.innerHTML=wb?bossHtml(wb[0],wb[1]):"<div class='notice'>全ボス討伐済み！</div>"}
-function renderBadges(){badges.innerHTML=state.badges.length?state.badges.map(b=>`<span class="badge">🏅${b}</span>`).join(""):"<div class='small'>まだ称号なし</div>"}function renderMemos(){memoList.innerHTML=state.memos.length?state.memos.map(m=>`<div class="lesson"><div><div class="lessonTitle">${m.date}</div><div class="lessonMeta">${m.text.replace(/</g,"&lt;")}</div></div></div>`).join(""):"<div class='small'>まだメモなし</div>"}
-function renderStudy(){let s=studyStats();studySummary.innerHTML=`<div class="notice">今日：${minToText(s.day)}<br>今週：${minToText(s.week)}<br>今月：${minToText(s.month)}<br>トータル：${minToText(s.total)}<br>1日平均：${minToText(s.avg)}</div>`;studyList.innerHTML=state.studyLogs.length?state.studyLogs.map(l=>`<div class="lesson"><div><div class="lessonTitle">${l.date} ${l.start||""}${l.end?"〜"+l.end:""} ${l.subject}</div><div class="lessonMeta">${l.mins}分 ${l.memo||""}</div></div></div>`).join(""):"<div class='small'>まだ自習履歴なし</div>"}
-function renderEditLessons(){let d=dateSelect?.value||todayStr(),list=allLessons().filter(x=>x[0]===d);editLessons.innerHTML=`<h2 style="margin-top:14px">選択日の授業編集</h2>`+list.map(([d,p,n])=>`<div class="lesson"><div><div class="lessonTitle">${d} ${p} ${n}</div></div><div><button class="btn blue" onclick="editLesson('${d}','${p}','${n}')">編集</button><button class="btn red" style="margin-top:6px" onclick="deleteLesson('${d}','${p}','${n}')">削除</button></div></div>`).join("")}
-function renderLog(){log.textContent=state.log.slice(0,10).join("\n\n")}function resetGame(){if(confirm("本当に初期化？バックアップ推奨！")){localStorage.removeItem(KEY);location.reload()}}
-function showTab(id,btn){document.querySelectorAll(".screen").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");render()}
-migrate();loginBonus();render();
-</script>
+    <section class="card">
+      <div class="section-title"><h3>今日の献立</h3><button id="mealShuffleBtn" class="small-btn">候補変更</button></div>
+      <div class="meal">
+        <span>🍚</span>
+        <div><b id="mealTitle">豚しゃぶ</b><small id="mealNote">無理な日は買って帰ってOK</small></div>
+      </div>
+    </section>
+
+    <section class="card settings-preview">
+      <div class="section-title"><h3>連携状況</h3><button data-open="settingsModal" class="small-btn">設定</button></div>
+      <p id="connectionStatus">この端末に保存中</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="active" data-scroll="top">🏠<small>ホーム</small></button>
+    <button data-open="missionModal">🎯<small>ミッション</small></button>
+    <button data-open="expenseModal">💰<small>家計簿</small></button>
+    <button data-open="studyModal">📚<small>学校</small></button>
+    <button data-open="settingsModal">⚙️<small>設定</small></button>
+  </nav>
+
+  <dialog id="missionModal"><form method="dialog" class="modal-form">
+    <div class="modal-head"><h3>ミッション追加</h3><button value="cancel">×</button></div>
+    <label>種類<select id="missionType"><option>勉強</option><option>家事</option><option>健康</option><option>食事</option><option>仕事</option><option>休息</option><option>生活</option></select></label>
+    <label>やること<input id="missionTitle" placeholder="例：心理学を20分"></label>
+    <label>最低ライン<input id="missionMinimum" placeholder="例：教科書を開くだけ"></label>
+    <label>EXP<input id="missionExp" type="number" value="10" min="1"></label>
+    <button type="button" class="primary" id="saveMission">追加する</button>
+  </form></dialog>
+
+  <dialog id="expenseModal"><form method="dialog" class="modal-form">
+    <div class="modal-head"><h3>支出を入力</h3><button value="cancel">×</button></div>
+    <label>日付<input id="expenseDate" type="date"></label>
+    <label>金額<input id="expenseAmount" type="number" inputmode="numeric" placeholder="980"></label>
+    <label>カテゴリ<select id="expenseCategory"><option>食費</option><option>外食</option><option>日用品</option><option>交通</option><option>学校</option><option>娯楽</option><option>医療</option><option>美容</option><option>固定費</option><option>その他</option></select></label>
+    <label>内容・お店<input id="expenseTitle" placeholder="コンビニ、ドラッグストアなど"></label>
+    <label>支払方法<select id="expenseMethod"><option>PayPay</option><option>現金</option><option>クレジット</option><option>交通系IC</option><option>口座振替</option><option>その他</option></select></label>
+    <button type="button" class="primary" id="saveExpense">保存する</button>
+  </form></dialog>
+
+  <dialog id="studyModal"><form method="dialog" class="modal-form">
+    <div class="modal-head"><h3>課題を追加</h3><button value="cancel">×</button></div>
+    <label>科目<input id="taskSubject" placeholder="心理学"></label>
+    <label>課題・試験<input id="taskTitle" placeholder="第1回レポート"></label>
+    <label>期限<input id="taskDeadline" type="date"></label>
+    <label>目安時間（分）<input id="taskMinutes" type="number" value="30"></label>
+    <button type="button" class="primary" id="saveTask">追加する</button>
+  </form></dialog>
+
+  <dialog id="healthModal"><form method="dialog" class="modal-form">
+    <div class="modal-head"><h3>体調を入力</h3><button value="cancel">×</button></div>
+    <label>HP・元気度（0〜100）<input id="healthHp" type="range" min="0" max="100" value="80"><output id="hpOutput">80</output></label>
+    <label>睡眠時間<input id="healthSleep" type="number" step="0.5" placeholder="6.5"></label>
+    <label>体重（任意）<input id="healthWeight" type="number" step="0.1" placeholder="74.0"></label>
+    <label>メモ<textarea id="healthMemo" placeholder="頭痛、疲れ、生理など"></textarea></label>
+    <button type="button" class="primary" id="saveHealth">保存する</button>
+  </form></dialog>
+
+  <dialog id="settingsModal"><form method="dialog" class="modal-form">
+    <div class="modal-head"><h3>設定・同期</h3><button value="cancel">×</button></div>
+    <label>Apps Script WebアプリURL<input id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec"></label>
+    <label>同期用パスコード<input id="syncKey" type="password" placeholder="自分で決めた文字列"></label>
+    <button type="button" class="primary" id="saveSettings">設定を保存</button>
+    <button type="button" class="secondary" id="exportBtn">バックアップを書き出す</button>
+    <label class="file-label">バックアップを読み込む<input id="importInput" type="file" accept=".json"></label>
+    <button type="button" class="danger" id="resetBtn">データを初期化</button>
+  </form></dialog>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
 </body>
 </html>
